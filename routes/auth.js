@@ -22,7 +22,6 @@ router.get('/', auth, async (req, res) => {
         console.error(e.message);
         res.status(500).send('server error');
     }
-    return res.send('Get logged i user');
 });
 
 
