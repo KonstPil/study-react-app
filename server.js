@@ -1,5 +1,6 @@
 const express = require("express");
 const connectDb = require('./config/db');
+const path = require('path');
 
 const app = express();
 
@@ -9,9 +10,12 @@ connectDb();
 //init middleware
 app.use(express.json({extended: false}));
 
-app.get('/', (req, res)=>{
-   return res.json({msg: 'Hello World'});
-});
+if(process.env.NOVE_ENV === 'production'){
+   app.use(express.static('client/build'));
+
+   app.get('*', (req,res) => res.sendFile(path.resolve(__dirname,
+       çlient, 'index.html')))
+}
 
 app.use('/api/users', require('./routes/users'));
 app.use('/api/auth', require('./routes/auth'));
